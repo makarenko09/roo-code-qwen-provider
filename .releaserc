@@ -1,0 +1,43 @@
+{
+    "branches": [
+        "main"
+    ],
+    "plugins": [
+        [
+            "@semantic-release/commit-analyzer",
+            {
+                "preset": "conventionalcommits"
+            }
+        ],
+        [
+            "@semantic-release/release-notes-generator",
+            {
+                "preset": "conventionalcommits"
+            }
+        ],
+        [
+            "@semantic-release/github",
+            {
+                "assets": [
+                    "dist/**",
+                    "lib/**",
+                    "bin/**",
+                    "scripts/**",
+                    "templates/**",
+                    "README.md",
+                    "package.json"
+                ],
+                "releasedLabels": [
+                    "Status: Released"
+                ]
+            }
+        ],
+        [
+            "@semantic-release/npm",
+            {
+                "pkgRoot": ".",
+                "tarballDir": "dist"
+            }
+        ]
+    ]
+}

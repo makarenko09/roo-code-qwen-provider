@@ -288,7 +288,13 @@ MIT
 4. Push: `git push origin feature/new-feature`
 5. Откройте Pull Request
 
-## 📞 Поддержка
+## 💻 Built With
+
+![Node.js](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
+![Shell Script](https://img.shields.io/badge/Shell_Script-121011?style=for-the-badge&logo=gnu-bash&logoColor=white)
+![Semantic Release](https://img.shields.io/badge/Semantic%20Release-0xFFD700?style=for-the-badge&logo=semantic-release&logoColor=white)
+
+## � Поддержка
 
 - GitHub Issues: https://github.com/avare41lll/roo-code-qwen-provider/issues
 - Документация Roo Code: https://docs.roocode.com
