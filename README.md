@@ -1,22 +1,24 @@
 # 🔄 Roo Code Qwen Provider
 
+[![npm version](https://img.shields.io/npm/v/roo-code-qwen-provider.svg)](https://www.npmjs.com/package/roo-code-qwen-provider)
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![GitHub](https://img.shields.io/badge/GitHub-repo-green.svg)](https://github.com/avare41lll/roo-code-qwen-provider)
 
 Глобальная установка и настройка Roo Code provider для Qwen Code CLI с автоматической генерацией индивидуальной конфигурации и утилитами синхронизации квот.
 
-> **Примечание:** Пакет распространяется через GitHub. Для установки требуется доступ к репозиторию.
-
 ## 📦 Установка
 
-### Через GitHub (рекомендуется)
+### Из npm (рекомендуется)
+
+```bash
+npm install -g roo-code-qwen-provider
+```
+
+### Через GitHub
 
 ```bash
 # Глобальная установка из GitHub
 npm install -g git+https://github.com/avare41lll/roo-code-qwen-provider.git
-
-# Или через SSH (если есть доступ)
-npm install -g git@github.com:avare41lll/roo-code-qwen-provider.git
 ```
 
 ### Локальная установка (для разработки)

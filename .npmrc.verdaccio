@@ -1,0 +1,8 @@
+# Локальный реестр Verdaccio
+registry=http://localhost:4873/
+
+# Отключить строгую проверку SSL для локального реестра
+strict-ssl=false
+
+# Токен аутентификации
+//localhost:4873/:_authToken=ZjU5ODVhNTNlYTU2OTI3YTA1NjI5NmQwM2E5ZDU4M2Q6YTBhYWRjNGIzN2FlYWVmZTRmYWRlYg==

@@ -1,6 +1,6 @@
 {
   "name": "roo-code-qwen-provider",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "Глобальная настройка Roo Code provider для Qwen Code CLI с утилитами синхронизации квот",
   "main": "lib/index.js",
   "bin": {
@@ -30,12 +30,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/avare41lll/roo-code-qwen-provider.git"
+    "url": "git+https://github.com/makarenko09/roo-code-qwen-provider.git"
   },
   "bugs": {
-    "url": "https://github.com/avare41lll/roo-code-qwen-provider/issues"
+    "url": "https://github.com/makarenko09/roo-code-qwen-provider/issues"
   },
-  "homepage": "https://github.com/avare41lll/roo-code-qwen-provider#readme",
+  "homepage": "https://github.com/makarenko09/roo-code-qwen-provider#readme",
   "engines": {
     "node": ">=14.0.0"
   },
