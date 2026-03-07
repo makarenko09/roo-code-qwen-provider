@@ -1,0 +1,55 @@
+{
+  "name": "roo-code-qwen-provider",
+  "version": "1.0.0",
+  "description": "Глобальная настройка Roo Code provider для Qwen Code CLI с утилитами синхронизации квот",
+  "main": "lib/index.js",
+  "bin": {
+    "roo-code-provider": "bin/install.js",
+    "roo-sync": "bin/roo-sync.js",
+    "rcp": "bin/install.js"
+  },
+  "scripts": {
+    "start": "node bin/install.js",
+    "sync": "./scripts/sync-roo-quota.sh",
+    "check": "./scripts/sync-roo-quota.sh -c -v",
+    "generate": "./scripts/sync-roo-quota.sh -g -v",
+    "test": "node lib/test.js",
+    "postinstall": "chmod +x bin/*.js scripts/*.sh scripts/lib/*.sh 2>/dev/null || true"
+  },
+  "keywords": [
+    "roo-code",
+    "qwen",
+    "vscode",
+    "provider",
+    "cli",
+    "quota-sync",
+    "sync",
+    "token-tracking"
+  ],
+  "author": "DEV",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/avare41lll/roo-code-qwen-provider.git"
+  },
+  "bugs": {
+    "url": "https://github.com/avare41lll/roo-code-qwen-provider/issues"
+  },
+  "homepage": "https://github.com/avare41lll/roo-code-qwen-provider#readme",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "preferGlobal": true,
+  "files": [
+    "bin/",
+    "lib/",
+    "scripts/",
+    "templates/",
+    "README.md"
+  ],
+  "os": [
+    "linux",
+    "darwin",
+    "win32"
+  ]
+}
