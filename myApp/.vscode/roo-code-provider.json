@@ -1,0 +1,25 @@
+{
+  "provider": "qwen-code-cli",
+  "apiConfigName": "qwen",
+  "qwenCliPath": "qwen",
+  "authConfig": {
+    "type": "oauth",
+    "credsPath": "/home/DEV/.qwen/oauth_creds.json",
+    "settingsPath": "/home/DEV/.qwen/settings.json"
+  },
+  "model": {
+    "default": "coder-model",
+    "temperature": 0.2,
+    "maxTokens": 4096
+  },
+  "quotaTracking": {
+    "enabled": true,
+    "syncWithCli": true,
+    "storagePath": "/home/DEV/.vscode-server/data/User/globalStorage/rooveterinaryinc.roo-cline/tasks"
+  },
+  "endpoints": {
+    "oauth": "https://oauth.qwen.ai",
+    "dashscope": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+    "codingPlan": "https://coding.dashscope.aliyuncs.com/v1"
+  }
+}
