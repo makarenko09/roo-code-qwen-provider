@@ -11,10 +11,14 @@ const fs = require('fs');
 
 // Найти директорию пакета
 let scriptDir = __dirname;
-// Если установлено глобально, scriptDir будет в node_modules
+
+// Если установлено глобально, scriptDir будет в node_modules/roo-code-qwen-provider/bin
+// или в lib/node_modules/roo-code-qwen-provider/bin
 if (scriptDir.includes('node_modules')) {
-  // Ищем директорию scripts относительно bin
-  scriptDir = path.join(scriptDir, '..', 'roo-code-qwen-provider', 'scripts');
+  // Ищем директорию пакета (родительская директория node_modules)
+  const pkgDir = path.join(scriptDir, '..');
+  // scripts находится на том же уровне что и bin
+  scriptDir = path.join(pkgDir, 'scripts');
 } else {
   // Локальная разработка
   scriptDir = path.join(__dirname, '..', 'scripts');
@@ -25,6 +29,7 @@ const syncScript = path.join(scriptDir, 'sync-roo-quota.sh');
 // Проверка существования скрипта
 if (!fs.existsSync(syncScript)) {
   console.error('❌ Скрипт синхронизации не найден:', syncScript);
+  console.error('Путь поиска:', scriptDir);
   console.error('Убедитесь, что пакет установлен корректно.');
   process.exit(1);
 }

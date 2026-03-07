@@ -30,6 +30,3 @@ coverage/
 
 # Local npm registry config
 .npmrc
-
-# Verdaccio storage
-verdaccio-storage/
