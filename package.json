@@ -1,6 +1,6 @@
 {
   "name": "roo-code-qwen-provider",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "Утилиты синхронизации квот между Qwen Code CLI и Roo Code VSCode",
   "main": "lib/utils.js",
   "bin": {
