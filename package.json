@@ -1,6 +1,6 @@
 {
   "name": "roo-code-qwen-provider",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Глобальная настройка Roo Code provider для Qwen Code CLI с утилитами синхронизации квот",
   "main": "lib/index.js",
   "bin": {
