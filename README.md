@@ -2,56 +2,26 @@
 
 [![npm version](https://img.shields.io/npm/v/roo-code-qwen-provider.svg)](https://www.npmjs.com/package/roo-code-qwen-provider)
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![GitHub](https://img.shields.io/badge/GitHub-repo-green.svg)](https://github.com/avare41lll/roo-code-qwen-provider)
+[![GitHub](https://img.shields.io/badge/GitHub-repo-green.svg)](https://github.com/makarenko09/roo-code-qwen-provider)
 
-Глобальная установка и настройка Roo Code provider для Qwen Code CLI с автоматической генерацией индивидуальной конфигурации и утилитами синхронизации квот.
+Утилиты синхронизации квот между Qwen Code CLI и Roo Code VSCode.
 
 ## 📦 Установка
-
-### Из npm (рекомендуется)
 
 ```bash
 npm install -g roo-code-qwen-provider
 ```
 
-### Через GitHub
-
-```bash
-# Глобальная установка из GitHub
-npm install -g git+https://github.com/avare41lll/roo-code-qwen-provider.git
-```
-
-### Локальная установка (для разработки)
-
-```bash
-# Клонировать репозиторий
-git clone https://github.com/avare41lll/roo-code-qwen-provider.git
-cd roo-code-qwen-provider
-
-# Установить локально
-npm install -g .
-```
-
-### Из локальной директории
-
-```bash
-# Если пакет уже скачан
-npm install -g /path/to/roo-code-qwen-provider
-```
-
 ## 🚀 Быстрый старт
 
-После установки доступны команды:
+После установки доступна команда:
 
 ```bash
 # Проверка системы
 roo-sync -c -v
 
-# Синхронизация с генерацией конфигурации
-roo-sync -g
-
-# Тихий режим (для cron)
-roo-sync -q
+# Запуск синхронизации
+roo-sync
 ```
 
 ## 📖 Команды
@@ -60,23 +30,11 @@ roo-sync -q
 
 | Опция | Описание |
 |-------|----------|
-| `-g, --generate [путь]` | Сгенерировать roo-code-provider.json |
-| `-o, --output путь` | Путь для сохранения конфигурации |
 | `-b, --no-backup` | Не создавать резервную копию |
 | `-v, --verbose` | Подробный вывод |
-| `-q, --quiet` | Тихий режим (для cron) |
 | `-c, --check` | Только проверка (без статистики) |
 | `-h, --help` | Показать справку |
 
-### roo-code-provider (rcp)
-
-| Команда | Описание |
-|---------|----------|
-| `install`, `i` | Установить конфигурацию |
-| `generate`, `g` | Сгенерировать конфигурацию |
-| `check`, `c` | Проверить систему |
-| `update`, `u` | Обновить конфигурацию |
-| `remove`, `r` | Удалить конфигурацию |
 
 ## 📋 Примеры использования
 
@@ -93,70 +51,31 @@ roo-sync
 - 📊 Статистику Roo Code
 - 💾 Создаёт резервную копию
 
-### Генерация конфигурации провайдера
-
-```bash
-roo-sync -g
-```
-
-Создаёт `~/roo-code-provider.json` с индивидуальными путями:
-
-```json
-{
-  "provider": "qwen-code-cli",
-  "qwenCliPath": "/home/user/.nvm/versions/node/v24/bin/qwen",
-  "authConfig": {
-    "type": "oauth",
-    "credsPath": "/home/user/.qwen/oauth_creds.json",
-    "settingsPath": "/home/user/.qwen/settings.json"
-  },
-  "model": {
-    "default": "coder-model",
-    "temperature": 0.2,
-    "maxTokens": 4096
-  },
-  "quotaTracking": {
-    "enabled": true,
-    "syncWithCli": true,
-    "storagePath": "/home/user/.vscode-server/.../tasks"
-  }
-}
-```
-
 ### Настройка Roo Code в VSCode
 
 1. Откройте **VSCode**
 2. Перейдите в панель **Roo Code**
 3. Нажмите **Settings** (⚙️) → **Provider**
 4. Выберите **"Qwen Code CLI API"**
-5. Укажите путь к конфигурации: `~/roo-code-provider.json`
+5. Roo Code автоматически использует `~/.qwen/oauth_creds.json`
 6. Перезапустите VSCode
-
-## 🤖 Автоматизация
-
-### Cron (каждые 6 часов)
-
-```bash
-crontab -e
-# Запуск каждые 6 часов в тихом режиме
-0 */6 * * * roo-sync -q >> /tmp/roo-sync.log 2>&1
-```
-
-### Git hook (pre-commit)
-
-```bash
-# .git/hooks/pre-commit
-#!/bin/bash
-roo-sync -q
-```
 
 ## 🔧 Требования
 
 - **Node.js** >= 14.0.0
-- **Qwen Code CLI** (установлен и настроен)
+- **Qwen Code CLI** (установлен и аутентифицирован через Qwen OAuth):
+  > <small>Вы можете использовать любую другую аутентификацию, если у вас есть такая потребность, но данный npm не тестировался в этих целях!</small>
 - **Roo Code Extension** для VSCode
 - **bash** >= 4.0
 - **jq** (рекомендуется, для парсинга JSON)
+
+## 🖥️ Поддерживаемые среды
+
+- **ОС:** Linux, WSL2 (Windows Subsystem for Linux)
+- **IDE:** VSCode с расширением Roo Code
+- **Терминал:** bash, zsh
+
+> <small>Другие операционные системы (macOS, Windows без WSL2) не тестировались — работа не гарантируется.</small>
 
 ### Проверка зависимостей
 
@@ -173,12 +92,9 @@ jq --version
 ```
 roo-code-qwen-provider/
 ├── bin/
-│   ├── install.js         # CLI: roo-code-provider
 │   └── roo-sync.js        # CLI: roo-sync (обёртка)
 ├── lib/
-│   ├── utils.js           # Утилиты обнаружения путей
-│   ├── config-generator.js # Генератор конфигурации
-│   └── test.js            # Тесты
+│   └── utils.js           # Утилиты обнаружения путей
 ├── scripts/
 │   ├── sync-roo-quota.sh  # Главный скрипт
 │   └── lib/
@@ -187,10 +103,7 @@ roo-code-qwen-provider/
 │       ├── check-oauth.sh     # Проверка OAuth
 │       ├── check-qwen.sh      # Проверка Qwen
 │       ├── get-stats.sh       # Статистика Roo Code
-│       ├── generate-config.sh # Генерация конфига
 │       └── backup.sh          # Резервное копирование
-├── templates/
-│   └── roo-code-provider.json.template
 ├── package.json
 └── README.md
 ```
@@ -200,7 +113,7 @@ roo-code-qwen-provider/
 ### Локальная установка для разработки
 
 ```bash
-git clone https://github.com/avare41lll/roo-code-qwen-provider.git
+git clone https://github.com/makarenko09/roo-code-qwen-provider.git
 cd roo-code-qwen-provider
 npm install -g .
 ```
@@ -211,9 +124,6 @@ npm install -g .
 # Проверка системы
 npm run check
 
-# Генерация конфигурации
-npm run generate
-
 # Запуск синхронизации
 npm run sync
 ```
@@ -223,7 +133,7 @@ npm run sync
 ```bash
 npm update -g roo-code-qwen-provider
 # или переустановить
-npm install -g git+https://github.com/avare41lll/roo-code-qwen-provider.git
+npm install -g git+https://github.com/makarenko09/roo-code-qwen-provider.git
 ```
 
 ## 🔐 Безопасность
@@ -248,12 +158,6 @@ qwen logout
 qwen login
 ```
 
-### Roo Code не видит конфигурацию
-
-1. Проверьте путь к конфигурации в настройках Roo Code
-2. Убедитесь, что файл существует: `ls -la ~/roo-code-provider.json`
-3. Перезапустите VSCode
-
 ### Ошибка при установке из GitHub
 
 ```bash
@@ -261,7 +165,7 @@ qwen login
 npm cache clean --force
 
 # Попробовать снова
-npm install -g git+https://github.com/avare41lll/roo-code-qwen-provider.git
+npm install -g git+https://github.com/makarenko09/roo-code-qwen-provider.git
 ```
 
 ## 📊 Синхронизация квот
@@ -294,9 +198,9 @@ MIT
 ![Shell Script](https://img.shields.io/badge/Shell_Script-121011?style=for-the-badge&logo=gnu-bash&logoColor=white)
 ![Semantic Release](https://img.shields.io/badge/Semantic%20Release-0xFFD700?style=for-the-badge&logo=semantic-release&logoColor=white)
 
-## � Поддержка
+##  Поддержка
 
-- GitHub Issues: https://github.com/avare41lll/roo-code-qwen-provider/issues
+- GitHub Issues: https://github.com/makarenko09/roo-code-qwen-provider/issues
 - Документация Roo Code: https://docs.roocode.com
 - Qwen CLI Documentation: https://qwenlm.github.io/qwen-code-docs
 
@@ -306,7 +210,6 @@ MIT
 
 - ✅ Начальная версия пакета
 - ✅ Автообнаружение путей Qwen CLI и Roo Code
-- ✅ Генерация индивидуального roo-code-provider.json
 - ✅ Модульные скрипты синхронизации
 - ✅ Проверка статуса OAuth токена
 - ✅ Статистика использования токенов
@@ -318,4 +221,4 @@ MIT
 **Дата:** 2026-03-07  
 **Автор:** DEV  
 **License:** MIT  
-**GitHub:** https://github.com/avare41lll/roo-code-qwen-provider
+**GitHub:** https://github.com/makarenko09/roo-code-qwen-provider

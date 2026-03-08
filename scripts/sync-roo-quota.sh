@@ -1,6 +1,6 @@
 #!/bin/bash
 # sync-roo-quota.sh - Главный скрипт синхронизации квот Roo Code + Qwen CLI
-# Версия 2.0.0 с модульной архитектурой и генерацией roo-code-provider.json
+# Версия 2.0.0 с модульной архитектурой
 
 set -e
 
@@ -15,15 +15,11 @@ source "${LIB_DIR}/check.sh"
 source "${LIB_DIR}/check-oauth.sh"
 source "${LIB_DIR}/check-qwen.sh"
 source "${LIB_DIR}/get-stats.sh"
-source "${LIB_DIR}/generate-config.sh"
 source "${LIB_DIR}/backup.sh"
 
 # Переменные командной строки
-GENERATE_CONFIG=false
-GENERATE_CONFIG_PATH=""
 NO_BACKUP=false
 VERBOSE=false
-QUIET=false
 SHOW_HELP=false
 SHOW_VERSION=false
 
@@ -32,33 +28,27 @@ show_help() {
     cat << EOF
 ${CYAN}Roo Code Quota Sync v${SCRIPT_VERSION}${NC}
 
-Синхронизация квот между Qwen Code CLI и Roo Code VSCode
+Проверка конфигурации и синхронизация квот между Qwen Code CLI и Roo Code VSCode
 
 ${YELLOW}Использование:${NC}
   $SCRIPT_NAME [опции]
 
 ${YELLOW}Опции:${NC}
-  -g, --generate [путь]    Сгенерировать roo-code-provider.json
-  -o, --output путь        Путь для сохранения конфигурации
   -b, --no-backup          Не создавать резервную копию
   -v, --verbose            Подробный вывод
-  -q, --quiet              Тихий режим (минимум вывода)
   -c, --check              Только проверка (без статистики)
   -h, --help               Показать эту справку
   -V, --version            Показать версию
 
 ${YELLOW}Примеры:${NC}
-  $SCRIPT_NAME                          # Запуск с проверками и статистикой
-  $SCRIPT_NAME -g                       # + сгенерировать конфиг в ~/roo-code-provider.json
-  $SCRIPT_NAME -g -o ~/.config/roo.json # + сгенерировать в указанном месте
-  $SCRIPT_NAME -c                       # только проверка системы
-  $SCRIPT_NAME -q                       # тихий режим (для cron)
+  $SCRIPT_NAME              # Запуск с проверками и статистикой
+  $SCRIPT_NAME -c           # Только проверка системы
+  $SCRIPT_NAME -v           # Подробный вывод
 
 ${YELLOW}Переменные окружения:${NC}
   QWEN_SETTINGS           Путь к settings.json Qwen
   QWEN_OAUTH              Путь к oauth_creds.json Qwen
   ROO_STORAGE             Путь к хранилищу Roo Code
-  ROO_PROVIDER_CONFIG     Путь для roo-code-provider.json
 
 ${YELLOW}Статус возврата:${NC}
   0 - успех
@@ -76,24 +66,12 @@ show_version() {
 parse_args() {
     while [[ $# -gt 0 ]]; do
         case $1 in
-            -g|--generate)
-                GENERATE_CONFIG=true
-                shift
-                ;;
-            -o|--output)
-                GENERATE_CONFIG_PATH="$2"
-                shift 2
-                ;;
             -b|--no-backup)
                 NO_BACKUP=true
                 shift
                 ;;
             -v|--verbose)
                 VERBOSE=true
-                shift
-                ;;
-            -q|--quiet)
-                QUIET=true
                 shift
                 ;;
             -c|--check)
@@ -174,36 +152,6 @@ create_backup() {
     backup_roo_data "" "$VERBOSE"
 }
 
-# Сгенерировать конфигурацию провайдера
-generate_config() {
-    local output_path="${GENERATE_CONFIG_PATH:-$ROO_PROVIDER_CONFIG}"
-    
-    echo ""
-    echo -e "${CYAN}=== Генерация конфигурации провайдера ===${NC}"
-    echo ""
-    
-    # Разрешить ~ в пути
-    output_path="${output_path/#\~/$HOME}"
-    
-    # Сгенерировать
-    local result=$(generate_provider_config "$output_path" "$VERBOSE")
-    
-    # Валидировать
-    if [ "$VERBOSE" = "true" ]; then
-        echo ""
-        echo "Валидация конфигурации..."
-        validate_config "$output_path"
-    fi
-    
-    echo -e "${GREEN}✓ Конфигурация сохранена: $output_path${NC}"
-    echo ""
-    echo -e "${YELLOW}Для применения в Roo Code:${NC}"
-    echo "  1. Откройте VSCode"
-    echo "  2. Roo Code → Settings → Provider"
-    echo "  3. Укажите путь: $output_path"
-    echo ""
-}
-
 # Показать итоговую информацию
 show_summary() {
     if [ "$QUIET" = "true" ]; then
@@ -218,19 +166,9 @@ show_summary() {
     echo "  Qwen OAuth:      $QWEN_OAUTH"
     echo "  Roo Code storage: $ROO_STORAGE"
     echo ""
-    echo "💡 Для обновления квот:"
-    echo "  1. Запустите этот скрипт после каждой сессии"
-    echo "  2. Или настройте автозапуск через cron"
+    echo "💡 Roo Code автоматически использует:"
+    echo "  ~/.qwen/oauth_creds.json"
     echo ""
-    
-    # Если есть сгенерированный конфиг
-    if [ "$GENERATE_CONFIG" = "true" ]; then
-        local config_path="${GENERATE_CONFIG_PATH:-$ROO_PROVIDER_CONFIG}"
-        config_path="${config_path/#\~/$HOME}"
-        echo "📄 Конфигурация провайдера:"
-        echo "  Путь: $config_path"
-        echo ""
-    fi
 }
 
 # Главная функция
@@ -273,11 +211,6 @@ main() {
     
     # Создать резервную копию
     create_backup
-    
-    # Сгенерировать конфигурацию если запрошено
-    if [ "$GENERATE_CONFIG" = "true" ]; then
-        generate_config
-    fi
     
     # Итог
     show_summary

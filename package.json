@@ -1,26 +1,20 @@
 {
   "name": "roo-code-qwen-provider",
   "version": "1.0.0",
-  "description": "Глобальная настройка Roo Code provider для Qwen Code CLI с утилитами синхронизации квот",
-  "main": "lib/index.js",
+  "description": "Утилиты синхронизации квот между Qwen Code CLI и Roo Code VSCode",
+  "main": "lib/utils.js",
   "bin": {
-    "roo-code-provider": "bin/install.js",
-    "roo-sync": "bin/roo-sync.js",
-    "rcp": "bin/install.js"
+    "roo-sync": "bin/roo-sync.js"
   },
   "scripts": {
-    "start": "node bin/install.js",
     "sync": "./scripts/sync-roo-quota.sh",
     "check": "./scripts/sync-roo-quota.sh -c -v",
-    "generate": "./scripts/sync-roo-quota.sh -g -v",
-    "test": "node lib/test.js",
     "postinstall": "chmod +x bin/*.js scripts/*.sh scripts/lib/*.sh 2>/dev/null || true"
   },
   "keywords": [
     "roo-code",
     "qwen",
     "vscode",
-    "provider",
     "cli",
     "quota-sync",
     "sync",
@@ -44,7 +38,6 @@
     "bin/",
     "lib/",
     "scripts/",
-    "templates/",
     "README.md"
   ],
   "os": [
