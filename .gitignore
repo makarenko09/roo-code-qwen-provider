@@ -33,3 +33,6 @@ coverage/
 
 # Verdaccio storage
 verdaccio-storage/
+
+#Html for debugput
+input_scan
