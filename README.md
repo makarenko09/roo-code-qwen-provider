@@ -1,4 +1,8 @@
-# 🔄 Roo Code Qwen Provider
+# 🔄 Roo Code with API Qwen Code CLI Provider
+>[!NOTE]
+>[API Qwen Code CLI Provider](https://github.com/QwenLM/qwen-code/issues/1742#issuecomment-3867061383
+) don't support any use on other tools with simple quota: their exclude usage API on other tools, for example, Roo code, Kilo Code, [Openclaw](https://openclaw.ai/), and other. 
+As first Anthropic's done
 
 [![npm version](https://img.shields.io/npm/v/roo-code-qwen-provider.svg)](https://www.npmjs.com/package/roo-code-qwen-provider)
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
